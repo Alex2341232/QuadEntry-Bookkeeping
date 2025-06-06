@@ -268,7 +268,13 @@ async def get_invoices():
     """Get all processed invoices"""
     
     invoices = await db.invoices.find({}).to_list(1000)
-    return {"invoices": invoices}
+    # Remove ObjectId to avoid serialization issues
+    clean_invoices = []
+    for inv in invoices:
+        clean_inv = {k: v for k, v in inv.items() if k != "_id"}
+        clean_invoices.append(clean_inv)
+    
+    return {"invoices": clean_invoices}
 
 @app.get("/api/invoices/{invoice_id}")
 async def get_invoice(invoice_id: str):
