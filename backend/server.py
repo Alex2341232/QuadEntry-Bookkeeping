@@ -372,8 +372,14 @@ async def get_dashboard_summary():
     total_co2 = sum(inv.get("impact_entry", {}).get("co2_emissions", 0) for inv in impact_invoices)
     avg_labor_score = sum(inv.get("impact_entry", {}).get("labor_score", 0) for inv in impact_invoices) / max(len(impact_invoices), 1)
     
-    # Recent transactions (last 10)
+    # Recent transactions (last 10) - Remove MongoDB ObjectId to avoid serialization issues
     recent_invoices = sorted(invoices, key=lambda x: x.get("upload_date", ""), reverse=True)[:10]
+    
+    # Clean recent invoices to remove ObjectId
+    clean_recent_invoices = []
+    for inv in recent_invoices:
+        clean_inv = {k: v for k, v in inv.items() if k != "_id"}
+        clean_recent_invoices.append(clean_inv)
     
     return {
         "summary": {
@@ -384,7 +390,7 @@ async def get_dashboard_summary():
             "total_co2_emissions": total_co2,
             "avg_labor_score": round(avg_labor_score, 1)
         },
-        "recent_invoices": recent_invoices
+        "recent_invoices": clean_recent_invoices
     }
 
 if __name__ == "__main__":
