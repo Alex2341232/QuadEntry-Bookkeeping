@@ -45,7 +45,7 @@ QuadLedger demonstrates that accounting can go beyond profit by embedding **tran
 
 ---
 
-## 🔧 Tech Stack
+##  Tech Stack
 
 - `Frontend`: React (via Emergent.sh)  
 - `Backend`: Python (AI-powered invoice parsing)  
@@ -54,6 +54,6 @@ QuadLedger demonstrates that accounting can go beyond profit by embedding **tran
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
-> 📌 This is a prototype. For academic review or demonstration only.
+>  This is a prototype. For academic review or demonstration only.
